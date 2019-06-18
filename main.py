@@ -6,6 +6,8 @@ path = os.path.abspath('TOKEN.json')
 bot = commands.Bot(command_prefix="~")
 bot.remove_command('help')
 
+startup = ['hello']
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -22,15 +24,34 @@ async def ping(ctx):
     await ctx.send(lat)
 
 @bot.command()
-async def hello(ctx):
-    embed = discord.Embed(
-        colour = discord.Colour.blue()
-    )
-    embed.description = "hello"
-    embed.set_author(name=bot.user)
+async def load(ctx, cmdname):
+    string = str(cmdname)
+    try:
+        for f in startup:
+            if string == f:
+                bot.unload_extension(f)
+                bot.load_extension(f)
+        ctx.send("{} reloaded!", string)
+    catch:
+        ctx.send("error!")
 
-    await ctx.send(embed=embed)
 
+# @bot.command()
+# async def hello(ctx):
+#     embed = discord.Embed(
+#         colour = discord.Colour.blue()
+#     )
+#     embed.description = "hello"
+#     embed.set_author(name=bot.user)
+#
+#     await ctx.send(embed=embed)
+
+if __name__ == "__main__":
+    for file in startup:
+        try:
+            bot.load_extension(file)
+        except Exception as e:
+            print("couldn't load {}".format(file))
 
 with open(path, 'r') as f:
     data = json.load(f)
