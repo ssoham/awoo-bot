@@ -32,7 +32,7 @@ async def load(ctx, cmdname):
                 bot.unload_extension(f)
                 bot.load_extension(f)
         ctx.send("{} reloaded!", string)
-    catch:
+    except Exception as e:
         ctx.send("error!")
 
 
