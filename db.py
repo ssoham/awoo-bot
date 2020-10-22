@@ -4,7 +4,7 @@ from discord.ext import commands
 import random
 from requests import get
 
-class jack(commands.Cog):
+class db(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
